@@ -12,6 +12,12 @@ public class CeyoPushService extends FirebaseMessagingService {
         if ("call".equals(kind)) {
             String id = String.valueOf(d.get("id")).replaceAll("[^A-Za-z0-9_\\-]", "");
             CeyoAlarmReceiver.showIncomingCall(this, id, d.get("botName"), d.get("callKind"), "/?answerCall=" + id);
+        } else if ("message".equals(kind)) {
+            // A finished reply while the app is closed: WhatsApp-style, with inline Reply and Like.
+            String text = d.get("text");
+            if (text == null || text.trim().isEmpty()) return;
+            CeyoMessage.post(this, String.valueOf(d.get("id")).hashCode(), d.get("botName"), text, CeyoIntents.safePath(d.get("path")));
+            CeyoWidget.setStatus(this, d.get("botName"), text);
         } else if ("update".equals(kind)) {
             CeyoChannels.ensure(this);
             CeyoAlarmReceiver.notify(this, String.valueOf(d.get("id")).hashCode(), CeyoChannels.UPDATES,

@@ -63,7 +63,8 @@ public class MegsyBridge {
         WebView w = current.get();
         if (w == null || token == null) return;
         String safe = token.replaceAll("[^A-Za-z0-9_:\\-]", "");
-        w.post(() -> w.evaluateJavascript("window.megsyNativePushToken&&window.megsyNativePushToken('" + safe + "')", null));
+        String pkg = w.getContext().getPackageName().replaceAll("[^A-Za-z0-9_.]", "");
+        w.post(() -> w.evaluateJavascript("window.megsyNativePushToken&&window.megsyNativePushToken('" + safe + "','" + pkg + "')", null));
     }
 
     @JavascriptInterface public void scheduleCall(String json) { if (!trusted()) return; JSONObject o = parse(json);
