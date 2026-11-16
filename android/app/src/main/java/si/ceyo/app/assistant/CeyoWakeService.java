@@ -145,6 +145,12 @@ public class CeyoWakeService extends Service {
         Vibrator v = getSystemService(Vibrator.class);
         if (v != null && Build.VERSION.SDK_INT >= 26) v.vibrate(VibrationEffect.createOneShot(60, VibrationEffect.DEFAULT_AMPLITUDE));
         health("detected");
+        // As the phone's assistant, open the floating talk card over the current app (live voice, no full screen).
+        if (CeyoVoiceService.active(this)) {
+            sendBroadcast(new Intent(CeyoVoiceService.ACTION_SHOW).setPackage(getPackageName()));
+            stopSelf();
+            return;
+        }
         // The notification remains a reliable fallback when Android blocks background activity launches.
         CeyoAlarmReceiver.post(this, 902, new NotificationCompat.Builder(this, CeyoChannels.UPDATES)
             .setSmallIcon(R.drawable.ceyo_notification_icon).setContentTitle(CeyoRobot.name(this)).setContentText("أنا معاك — اتكلم")

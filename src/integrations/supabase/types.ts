@@ -922,6 +922,30 @@ export type Database = {
         }
         Relationships: []
       }
+      native_voice_devices: {
+        Row: {
+          created_at: string
+          id: string
+          last_used_at: string | null
+          secret_hash: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_used_at?: string | null
+          secret_hash: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_used_at?: string | null
+          secret_hash?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       payment_orders: {
         Row: {
           amount: number
