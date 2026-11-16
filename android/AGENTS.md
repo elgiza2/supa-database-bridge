@@ -7,10 +7,7 @@
 - Android Google uses system-browser PKCE and /auth/native-return → ceyo://auth/callback. Why: no Google WebView or session tokens in links.
 - Assistant features live in si.ceyo.app.assistant and talk to the web only through `MegsyBridge` (`window.MegsyAndroid`), whose HTTPS host must match capacitor.config.ts; phone→web hand-offs are relative paths with `ceyoPrompt`/`ceyoSend`. Why: no arbitrary-origin native access and one bridge contract (docs/android-bridge.md).
 - Notification reading for bills/scam links runs on-device in `Sentinel` and never uploads messages; it only works after the user enables the listener. Why: privacy and Play policy.
-- On-phone voice uses sherpa-onnx (wake word + bundled Piper Arabic voice); the AAR and model.onnx exceed the repo file limit, so run scripts/fetch-android-voice.sh before building. Why: free, offline, no vendor key, repository stays committable.
 
-- Native assistant recognition selects an external SpeechRecognizer component explicitly; native status notifications use real chat steps and reply text, while primary identity is synced by the authenticated home. Why: selecting the assistant itself recursively fails, and the composer has no final answer data.
 - Android trial artifacts are selected through CEYO_ANDROID_TRY with a distinct package and build-generated label; google-services.json carries a separate Firebase client for each package. Why: test installs must coexist with production and still receive pushes.
-- Pass wake activation in service intents instead of rereading cross-process SharedPreferences; preserve live JNI markers and reset denied toggles. Why: the isolated wake process has a stale preferences cache and must not silently ignore later activation.
-- Assistant overlays use transparent robot/edge views; speech timeout/no-match automatically rearm, while denied/missing services and hard errors stop with bounded backoff. Why: hands-free silence is normal, but an unavailable recognizer must not spin forever.
-- The assistant session talks natively: CeyoLiveCall streams raw PCM to a Vapi websocket call created server-side with a per-phone voice key (hash stored); the Vapi private key never ships in the APK. Why: works over any app without the WebView or a browser session.
+
+- The Android app ships only the notification reader, push and reminders; voice assistant, wake word and call screening are unregistered from the manifest. Why: owner chose a stable notifications-only phone app.
