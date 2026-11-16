@@ -8,6 +8,8 @@ type NativeApi = {
   scheduleReminder?: (json: string) => void;
   cancel?: (id: string) => void;
   requestPushToken?: () => void;
+  hasVoiceKey?: () => boolean;
+  setVoiceKey?: (key: string) => void;
 };
 
 declare global {
@@ -64,7 +66,19 @@ export async function bootNativeBridge(): Promise<void> {
       .catch(() => { /* signed out or offline: retried on the next sign-in */ });
   };
   const request = () => { try { a.requestPushToken?.(); } catch { /* push unavailable in this build */ } };
+  // The power-button assistant talks without the app open, so the phone keeps its own private voice key.
+  const voice = (force: boolean) => {
+    if (!a.setVoiceKey) return;
+    try { if (!force && a.hasVoiceKey?.()) return; } catch { /* old build */ }
+    void import("./voice.functions")
+      .then(({ registerVoiceDevice }) => registerVoiceDevice())
+      .then(({ key }) => a.setVoiceKey?.(key))
+      .catch(() => { /* retried on the next start */ });
+  };
   const { data } = await supabase.auth.getSession();
-  if (data.session) request();
-  supabase.auth.onAuthStateChange((event) => { if (event === "SIGNED_IN") request(); });
+  if (data.session) { request(); voice(false); }
+  supabase.auth.onAuthStateChange((event) => {
+    if (event === "SIGNED_IN") { request(); voice(false); }
+    if (event === "SIGNED_OUT") try { a.setVoiceKey?.(""); } catch { /* old build */ }
+  });
 }
