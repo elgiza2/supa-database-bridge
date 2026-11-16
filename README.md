@@ -1,5 +1,7 @@
 # Ceyo — دليل التشغيل والتسليم للوكيل التالي
 
+> **2026-11-16:** Project moved to a new Lovable project; web app published at https://supa-database-bridge.lovable.app and the Android shell now loads that host. Open items: see the last section of roadmap.md.
+
 المالك والمشغّل: **Megsy LLC**. التواصل القانوني: **CEO@megsyai.com**.
 آخر مراجعة: **2026-11-16**. هذا الدليل يشرح الواقع الموجود في الكود، وليس ضمانًا أن كل خدمة منشورة أو كل ميزة مكتملة.
 

@@ -665,3 +665,13 @@
 - [ ] Closed-app call push: waiting on owner's Firebase setup (google-services.json + FCM sender permission); server sender not written yet.
 - [ ] Wake-word accuracy for Arabic "يا سيو" untested on a real phone (English-trained model, phonetic keywords).
 - [ ] Publish web app so the phone shell gets the new chat hand-off/live-update code.
+
+## Imported into new Lovable project — 2026-11-16
+- [x] Import GitHub repo tap-to-trial-subscription into this project (same Supabase project kcrssdgsefhpzoidlhhm)
+- [x] Publish web app at https://supa-database-bridge.lovable.app (old project could no longer publish)
+- [x] Android shell and MegsyBridge trusted host point to supa-database-bridge.lovable.app
+- [x] Screen-edge glow overlay while the listening capsule is shown (touch pass-through, alpha 0.8)
+- [x] Ceyo Try v13 APK built (debug-signed; uninstall v12 first because the signing key differs)
+- [ ] Instant notification replies while app is closed: server FCM sender + push-token table; blocked on Firebase service-account JSON secret (google-services.json client config already present)
+- [ ] Daily spending alert limit: 1000 chosen by agent; waiting for owner's preferred limit
+- [ ] Server secrets from the old project (PUBLIC_APP_URL, Cerebras etc. env fallbacks) are not in this project's secret store; keys in the provider_api_keys pool keep working
