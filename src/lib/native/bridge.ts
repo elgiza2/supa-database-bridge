@@ -13,7 +13,7 @@ type NativeApi = {
 declare global {
   interface Window {
     MegsyAndroid?: NativeApi;
-    megsyNativePushToken?: (token: string) => void;
+    megsyNativePushToken?: (token: string, pkg?: string) => void;
   }
 }
 
@@ -51,9 +51,20 @@ export function cancelNativeTask(id: string): void {
   }
 }
 
-/** Closed-test native build: do not query retired task/push tables. */
+/** Registers this phone for closed-app replies: the native shell hands back its Firebase token,
+ *  which is saved for the signed-in user. Re-runs on every sign-in so account switches move the phone. */
+let pushBooted = false;
 export async function bootNativeBridge(): Promise<void> {
-  // Native alarms remain available through explicit syncNativeTask calls.
-  // Background push is unavailable until an authorized transport is configured.
-  if (!api()) return;
+  const a = api();
+  if (!a?.requestPushToken || pushBooted) return;
+  pushBooted = true;
+  window.megsyNativePushToken = (token, pkg) => {
+    void import("./push.functions")
+      .then(({ registerPushToken }) => registerPushToken({ data: { token, pkg: pkg === "si.ceyo.app.trial" ? "si.ceyo.app.trial" : "si.ceyo.app" } }))
+      .catch(() => { /* signed out or offline: retried on the next sign-in */ });
+  };
+  const request = () => { try { a.requestPushToken?.(); } catch { /* push unavailable in this build */ } };
+  const { data } = await supabase.auth.getSession();
+  if (data.session) request();
+  supabase.auth.onAuthStateChange((event) => { if (event === "SIGNED_IN") request(); });
 }

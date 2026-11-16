@@ -56,6 +56,10 @@ export async function runJob(jobId: string): Promise<string> {
     if (stateError) throw new Error("Could not save task completion");
     await db.from("conversations").update({ updated_at: new Date().toISOString() }).eq("id", job.conversation_id);
     if (waiting) return "login_required";
+    // Reach the phone even when the app is closed; the in-app watcher covers open sessions.
+    const { data: bot } = job.bot_id ? await db.from("bots").select("name").eq("id", job.bot_id).maybeSingle() : { data: null };
+    const { sendPhonePush } = await import("./phonePush.server");
+    await sendPhonePush(job.user_id, { kind: "message", id: job.id, botName: bot?.name || "Ceyo", text, path: job.bot_id ? "/?chat=" + encodeURIComponent("bot:" + job.bot_id) : "/" });
     // Ring the user the moment the task is done; the bot opens the call with the result.
     const { error: callError } = await db.from("agent_calls").upsert({ id: job.id, user_id: job.user_id, bot_id: job.bot_id, conversation_id: job.conversation_id, kind: "voice", status: "ringing", reason: `You finished the task the user gave you: "${job.goal.slice(0, 200)}". Tell them it's done and summarize the result briefly: ${text.slice(0, 900)}` }, { onConflict: "id", ignoreDuplicates: true });
     if (callError) console.error("Task finished, but its completion call could not be saved");

@@ -671,7 +671,7 @@
 - [x] Publish web app at https://supa-database-bridge.lovable.app (old project could no longer publish)
 - [x] Android shell and MegsyBridge trusted host point to supa-database-bridge.lovable.app
 - [x] Screen-edge glow overlay while the listening capsule is shown (touch pass-through, alpha 0.8)
-- [x] Ceyo Try v13 APK built (debug-signed; uninstall v12 first because the signing key differs)
-- [ ] Instant notification replies while app is closed: server FCM sender + push-token table; blocked on Firebase service-account JSON secret (google-services.json client config already present)
+- [x] Ceyo Try v13/v14 APKs built (debug-signed; uninstall v12 first because the signing key differs)
+- [x] Instant notification replies while app is closed: Firebase key in Vault (CEYO_FCM_SERVICE_ACCOUNT), native_push_tokens table, phone registers after sign-in, finished background replies push a WhatsApp-style message (v14). Firebase dry-run send verified; real phone delivery untested
 - [ ] Daily spending alert limit: 1000 chosen by agent; waiting for owner's preferred limit
 - [ ] Server secrets from the old project (PUBLIC_APP_URL, Cerebras etc. env fallbacks) are not in this project's secret store; keys in the provider_api_keys pool keep working
