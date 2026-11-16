@@ -25,7 +25,7 @@ import si.ceyo.app.R;
 
 /** Top "dynamic island" assistant: a small non-focusable overlay, so the user keeps using the phone while Ceyo listens. */
 public class CeyoIslandService extends Service {
-    private WindowManager wm; private LinearLayout pill; private TextView label; private CeyoRobot.Animated orb;
+    private WindowManager wm; private LinearLayout pill; private CeyoEdgeLight edge; private TextView label; private CeyoRobot.Animated orb;
     private SpeechRecognizer recognizer; private final Handler handler = new Handler(Looper.getMainLooper());
     private int retries, micWaits; private boolean done; private String prefix = "";
 
@@ -64,6 +64,14 @@ public class CeyoIslandService extends Service {
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN, PixelFormat.TRANSLUCENT);
         w.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL; w.y = dp(8);
         try { wm.addView(pill, w); } catch (Exception e) { fallback(); return; }
+        // Glowing screen edges while Ceyo listens. Touches pass through: the view is not touchable and
+        // window alpha stays at 0.8, the Android 12+ limit for pass-through overlays.
+        WindowManager.LayoutParams e = new WindowManager.LayoutParams(-1, -1, w.type,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, PixelFormat.TRANSLUCENT);
+        e.alpha = 0.8f;
+        if (Build.VERSION.SDK_INT >= 28) e.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+        try { edge = new CeyoEdgeLight(this); wm.addView(edge, e); } catch (Exception ignored) { edge = null; }
         status("بجهز الميكروفون…", "thinking");
         handler.postDelayed(this::listen, 300);
     }
@@ -114,6 +122,7 @@ public class CeyoIslandService extends Service {
     private void destroyRecognizer() { if (recognizer != null) { try { recognizer.cancel(); recognizer.destroy(); } catch (Exception ignored) { } recognizer = null; } }
     private void finishIsland() { done = true; handler.removeCallbacksAndMessages(null); destroyRecognizer();
         if (pill != null && wm != null) try { wm.removeView(pill); } catch (Exception ignored) { } pill = null;
+        if (edge != null && wm != null) try { wm.removeView(edge); } catch (Exception ignored) { } edge = null;
         CeyoWakeService.start(this); stopSelf(); }
     @Override public void onDestroy() { if (!done) finishIsland(); super.onDestroy(); }
     @Override public IBinder onBind(Intent i) { return null; }
