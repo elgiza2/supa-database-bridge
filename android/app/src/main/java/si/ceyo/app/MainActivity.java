@@ -33,11 +33,11 @@ public class MainActivity extends BridgeActivity {
         handleLaunch(getIntent());
     }
 
-    @Override public void onResume() { super.onResume(); si.ceyo.app.assistant.CeyoWakeService.start(this); si.ceyo.app.assistant.Routines.restoreAll(this); }
+    @Override public void onResume() { super.onResume(); si.ceyo.app.assistant.Routines.restoreAll(this); }
 
     @Override public void onRequestPermissionsResult(int code, String[] perms, int[] res) {
         super.onRequestPermissionsResult(code, perms, res);
-        if (code == 53 && res.length > 0 && res[0] == android.content.pm.PackageManager.PERMISSION_GRANTED) si.ceyo.app.assistant.CeyoWakeService.start(this);
+        if (code == 53 && res.length > 0 && res[0] == android.content.pm.PackageManager.PERMISSION_GRANTED)
         if ((code == 53 || code == 52) && (res.length == 0 || res[0] != android.content.pm.PackageManager.PERMISSION_GRANTED)) {
             getSharedPreferences("ceyo_assistant", MODE_PRIVATE).edit().putBoolean(code == 53 ? "wake_on" : "car_on", false).commit();
         }
