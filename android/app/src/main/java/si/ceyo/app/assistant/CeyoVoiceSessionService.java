@@ -10,7 +10,8 @@ public class CeyoVoiceSessionService extends VoiceInteractionSessionService {
         return new VoiceInteractionSession(this) {
             @Override public void onShow(Bundle a, int flags) {
                 super.onShow(a, flags);
-                startAssistantActivity(new Intent(getContext(), CeyoAssistantActivity.class));
+                // Power/home long-press opens a live Vapi voice call with the main bot.
+                startAssistantActivity(CeyoIntents.openIntent(getContext(), "/?ceyoCall=1"));
                 hide();
             }
         };
