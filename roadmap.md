@@ -1,3 +1,10 @@
+## Power-button assistant with live Vapi voice — 2026-11-16
+- [x] Floating talk card over the current app (no full app) with a native two-way Vapi voice conversation, barge-in and loudspeaker/headset routing.
+- [x] Phone gets its own private voice key after sign-in; server endpoint opens the Vapi call with the primary bot's name and persona (tested end-to-end: real audio returned).
+- [x] Choosing Ceyo as default assistant turns on "Hey Ceyo" (unless explicitly off) and the wake word opens the floating card.
+- [x] Built Ceyo Try v17 (code 17; widget, quick tile, car and wake notifications also open the floating voice card) with a new persistent signing key; old versions must be uninstalled once.
+- [ ] Real phone test of the call card, wake word and voice (owner's device).
+
 ## Top island assistant and phone settings page — 2026-11-16
 - [x] Wake word opens a non-focusable top overlay island (robot + live status), user keeps using the phone; full-screen assistant only when overlay permission is missing.
 - [x] Fix false "microphone used by another app": wake engine marks only while it holds AudioRecord and releases before opening the island.

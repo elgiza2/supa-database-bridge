@@ -34,6 +34,10 @@ public class CeyoAssistantActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         String p = getIntent().getStringExtra("prompt_prefix");
         if (p != null && p.length() < 200) prefix = p;
+        // Widget, quick tile, car and wake notifications: same floating live-voice card as the power button.
+        if (prefix.isEmpty() && !getIntent().getBooleanExtra("no_island", false) && CeyoVoiceService.active(this) && !CeyoLiveCall.key(this).isEmpty()) {
+            sendBroadcast(new android.content.Intent(CeyoVoiceService.ACTION_SHOW).setPackage(getPackageName())); finish(); return;
+        }
         if (!getIntent().getBooleanExtra("no_island", false) && CeyoIslandService.show(this, prefix)) { finish(); return; }
         getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         getWindow().getDecorView().setSystemUiVisibility(android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE | android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
