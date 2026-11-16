@@ -49,6 +49,16 @@ async function botFor(id: string | null): Promise<{ agent: AgentInfo; ids: strin
   return agent ? { agent, ids: agents.map((a) => a.id) } : null;
 }
 
+/** `?ceyoCall=1` from the phone's assistant button: open a live voice call with the main bot. */
+function takeQuickCallParam(): boolean {
+  if (typeof window === "undefined") return false;
+  const url = new URL(window.location.href);
+  if (url.searchParams.get("ceyoCall") !== "1") return false;
+  url.searchParams.delete("ceyoCall");
+  window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash);
+  return true;
+}
+
 const agentIdsCache: Record<string, string[]> = {};
 
 async function settleCall(id: string, status: "answered" | "declined" | "missed") {
@@ -164,6 +174,9 @@ export default function CallHost() {
       if (!alive || !data.user) return;
       userId = data.user.id;
       if (answerParam) void answerById(answerParam);
+      if (takeQuickCallParam() && !calls.get().active) {
+        void botFor(null).then((bot) => { if (alive && bot && !calls.get().active) { unlockCallAudio(); calls.start({ kind: "voice", agent: bot.agent, agentIds: bot.ids }); } }).catch(() => {});
+      }
       void scan();
       channel = supabase.channel(`agent-calls-${userId}-${Math.random().toString(36).slice(2)}`)
         .on("postgres_changes", { event: "*", schema: "public", table: "agent_calls", filter: `user_id=eq.${userId}` }, (p: any) => {
