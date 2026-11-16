@@ -675,3 +675,5 @@
 - [x] Instant notification replies while app is closed: Firebase key in Vault (CEYO_FCM_SERVICE_ACCOUNT), native_push_tokens table, phone registers after sign-in, finished background replies push a WhatsApp-style message (v14). Firebase dry-run send verified; real phone delivery untested
 - [ ] Daily spending alert limit: 1000 chosen by agent; waiting for owner's preferred limit
 - [ ] Server secrets from the old project (PUBLIC_APP_URL, Cerebras etc. env fallbacks) are not in this project's secret store; keys in the provider_api_keys pool keep working
+
+- [x] Voice calls moved to Vapi (one engine); power/home long-press opens a live call via /?ceyoCall=1 (v15). Needs: Publish + real phone test.

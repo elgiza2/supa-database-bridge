@@ -495,3 +495,6 @@ bunx vitest run
 - Verified: plan-price and domain tests (12) pass, typecheck clean. Not verified: real Kashier payment (keys missing), Play purchase (native + Console missing), popup in a signed-in browser.
 
 - Ceyo Try v12 (2026-11-16): speech engine fallback (external → on-device → system default) with engine name shown in Phone settings; WhatsApp-style robot notifications with inline Reply/Like; on-phone daily spending tally from bank notifications; automatic morning 08:00 / night 22:30 and check-in nudges (10:00–21:00). Not yet verified on a real phone. Still open: instant background replies need server push (FCM) instead of the web poller; true hardware Dynamic Island is not available to apps on Android — the top overlay pill remains.
+
+## Latest pass (Vapi)
+Calls use src/lib/audio/vapiCall.ts (Vapi web SDK, shared Ceyo assistant configured via API; private key in VAPI_PRIVATE_KEY). Assistant session opens /?ceyoCall=1. Verified: Vapi accepted a web call; unit test passes; APK v15 built. Not verified on a real phone.
