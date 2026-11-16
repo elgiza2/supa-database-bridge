@@ -17,7 +17,7 @@ import si.ceyo.app.R;
 
 /** `window.MegsyAndroid` — only answers pages from the trusted Ceyo origin. See docs/android-bridge.md. */
 public class MegsyBridge {
-    public static final String TRUSTED_HOST = "tap-to-trial-subscription.lovable.app";
+    public static final String TRUSTED_HOST = "supa-database-bridge.lovable.app";
     private static WeakReference<WebView> current = new WeakReference<>(null);
     private final Activity activity;
     private final WebView web;
