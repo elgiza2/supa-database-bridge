@@ -7,7 +7,7 @@ import { useVoiceChoice } from "@/pages/agent/hub/VoiceControls";
 import { type CallPhase, type RealtimeCall, type CallTurn } from "@/lib/audio/realtimeCall";
 import { sendCallFollowup } from "@/lib/calls/callFollowup";
 import { toast } from "sonner";
-import { startLiveAgentCall as startRealtimeCall } from "@/lib/audio/liveAgentCall";
+import { startVapiCall as startRealtimeCall } from "@/lib/audio/vapiCall";
 import { supabase } from "@/integrations/supabase/client";
 import { calls, useCalls, type ActiveCall } from "@/lib/calls/callStore";
 import type { AgentInfo } from "@/lib/agentsky/client";
