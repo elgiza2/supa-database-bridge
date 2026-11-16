@@ -59,7 +59,6 @@ import { Route as ApiPublicKashierWebhookRouteImport } from './routes/api/public
 import { Route as ApiPublicRemindersTickRouteImport } from './routes/api/public/reminders-tick'
 import { Route as ApiPublicTelegramKeysRouteImport } from './routes/api/public/telegram-keys'
 import { Route as ApiPublicTelnyxVoiceRouteImport } from './routes/api/public/telnyx-voice'
-import { Route as ApiPublicVoiceCallRouteImport } from './routes/api/public/voice-call'
 import { Route as ApiPublicAgentToolsTokenRouteImport } from './routes/api/public/agent-tools.$token'
 import { Route as ApiPublicChannelsTelegramRouteImport } from './routes/api/public/channels/telegram'
 import { Route as ApiPublicChannelsXPollRouteImport } from './routes/api/public/channels/x-poll'
@@ -323,11 +322,6 @@ const ApiPublicTelnyxVoiceRoute = ApiPublicTelnyxVoiceRouteImport.update({
   path: '/api/public/telnyx-voice',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicVoiceCallRoute = ApiPublicVoiceCallRouteImport.update({
-  id: '/api/public/voice-call',
-  path: '/api/public/voice-call',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPublicAgentToolsTokenRoute =
   ApiPublicAgentToolsTokenRouteImport.update({
     id: '/api/public/agent-tools/$token',
@@ -446,7 +440,6 @@ export interface FileRoutesByFullPath {
   '/api/public/reminders-tick': typeof ApiPublicRemindersTickRoute
   '/api/public/telegram-keys': typeof ApiPublicTelegramKeysRoute
   '/api/public/telnyx-voice': typeof ApiPublicTelnyxVoiceRoute
-  '/api/public/voice-call': typeof ApiPublicVoiceCallRoute
   '/api/public/agent-tools/$token': typeof ApiPublicAgentToolsTokenRoute
   '/api/public/channels/telegram': typeof ApiPublicChannelsTelegramRoute
   '/api/public/channels/x-poll': typeof ApiPublicChannelsXPollRoute
@@ -511,7 +504,6 @@ export interface FileRoutesByTo {
   '/api/public/reminders-tick': typeof ApiPublicRemindersTickRoute
   '/api/public/telegram-keys': typeof ApiPublicTelegramKeysRoute
   '/api/public/telnyx-voice': typeof ApiPublicTelnyxVoiceRoute
-  '/api/public/voice-call': typeof ApiPublicVoiceCallRoute
   '/api/public/agent-tools/$token': typeof ApiPublicAgentToolsTokenRoute
   '/api/public/channels/telegram': typeof ApiPublicChannelsTelegramRoute
   '/api/public/channels/x-poll': typeof ApiPublicChannelsXPollRoute
@@ -577,7 +569,6 @@ export interface FileRoutesById {
   '/api/public/reminders-tick': typeof ApiPublicRemindersTickRoute
   '/api/public/telegram-keys': typeof ApiPublicTelegramKeysRoute
   '/api/public/telnyx-voice': typeof ApiPublicTelnyxVoiceRoute
-  '/api/public/voice-call': typeof ApiPublicVoiceCallRoute
   '/api/public/agent-tools/$token': typeof ApiPublicAgentToolsTokenRoute
   '/api/public/channels/telegram': typeof ApiPublicChannelsTelegramRoute
   '/api/public/channels/x-poll': typeof ApiPublicChannelsXPollRoute
@@ -644,7 +635,6 @@ export interface FileRouteTypes {
     | '/api/public/reminders-tick'
     | '/api/public/telegram-keys'
     | '/api/public/telnyx-voice'
-    | '/api/public/voice-call'
     | '/api/public/agent-tools/$token'
     | '/api/public/channels/telegram'
     | '/api/public/channels/x-poll'
@@ -709,7 +699,6 @@ export interface FileRouteTypes {
     | '/api/public/reminders-tick'
     | '/api/public/telegram-keys'
     | '/api/public/telnyx-voice'
-    | '/api/public/voice-call'
     | '/api/public/agent-tools/$token'
     | '/api/public/channels/telegram'
     | '/api/public/channels/x-poll'
@@ -774,7 +763,6 @@ export interface FileRouteTypes {
     | '/api/public/reminders-tick'
     | '/api/public/telegram-keys'
     | '/api/public/telnyx-voice'
-    | '/api/public/voice-call'
     | '/api/public/agent-tools/$token'
     | '/api/public/channels/telegram'
     | '/api/public/channels/x-poll'
@@ -840,7 +828,6 @@ export interface RootRouteChildren {
   ApiPublicRemindersTickRoute: typeof ApiPublicRemindersTickRoute
   ApiPublicTelegramKeysRoute: typeof ApiPublicTelegramKeysRoute
   ApiPublicTelnyxVoiceRoute: typeof ApiPublicTelnyxVoiceRoute
-  ApiPublicVoiceCallRoute: typeof ApiPublicVoiceCallRoute
   ApiPublicAgentToolsTokenRoute: typeof ApiPublicAgentToolsTokenRoute
   ApiPublicChannelsTelegramRoute: typeof ApiPublicChannelsTelegramRoute
   ApiPublicChannelsXPollRoute: typeof ApiPublicChannelsXPollRoute
@@ -1207,13 +1194,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicTelnyxVoiceRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/voice-call': {
-      id: '/api/public/voice-call'
-      path: '/api/public/voice-call'
-      fullPath: '/api/public/voice-call'
-      preLoaderRoute: typeof ApiPublicVoiceCallRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/public/agent-tools/$token': {
       id: '/api/public/agent-tools/$token'
       path: '/api/public/agent-tools/$token'
@@ -1352,7 +1332,6 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicRemindersTickRoute: ApiPublicRemindersTickRoute,
   ApiPublicTelegramKeysRoute: ApiPublicTelegramKeysRoute,
   ApiPublicTelnyxVoiceRoute: ApiPublicTelnyxVoiceRoute,
-  ApiPublicVoiceCallRoute: ApiPublicVoiceCallRoute,
   ApiPublicAgentToolsTokenRoute: ApiPublicAgentToolsTokenRoute,
   ApiPublicChannelsTelegramRoute: ApiPublicChannelsTelegramRoute,
   ApiPublicChannelsXPollRoute: ApiPublicChannelsXPollRoute,
