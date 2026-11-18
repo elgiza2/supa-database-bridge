@@ -80,9 +80,12 @@ function parseTarget(value: string | null): { kind: "bot" | "group"; id: string 
 
 export default function AgentHubPage({ demo = false }: { demo?: boolean }) {
   const live = useWorkspaceStore();
-  const ws = demo
+  const rawWs = demo
     ? { ready: true, error: null, agents: DEMO_AGENTS, tier: "pro" as const, models: [], sessions: DEMO_SESSIONS }
     : live;
+  const safeAgents = useMemo(() => (rawWs.agents || []).filter((a): a is AgentInfo => !!a && typeof a.id === "string"), [rawWs.agents]);
+  const safeSessions = useMemo(() => (rawWs.sessions || []).filter((x) => !!x && typeof x.id === "string"), [rawWs.sessions]);
+  const ws = { ...rawWs, agents: safeAgents, sessions: safeSessions };
   const lang = "en" as HubLang;
   const ar = lang === "ar";
   const nav = useNavigate();
@@ -136,7 +139,7 @@ export default function AgentHubPage({ demo = false }: { demo?: boolean }) {
     const refreshGroups = () => {
       void agentApi.groups().then((groups) => {
         if (!active) return;
-        setLocal((current) => ({ ...current, groups: [...current.groups.filter((g) => g.id.startsWith("group-")), ...groups] }));
+        setLocal((current) => ({ ...current, groups: [...current.groups.filter((g) => !!g && typeof g.id === "string" && g.id.startsWith("group-")), ...(Array.isArray(groups) ? groups : []).filter((g): g is AgentGroup => !!g && typeof g.id === "string" && typeof g.coordinatorId === "string").map((g) => ({ ...g, memberIds: Array.isArray(g.memberIds) ? g.memberIds.filter((id) => typeof id === "string") : [] }))] }));
         void loadWorkspace(true);
       }).catch(() => {});
     };
