@@ -1,6 +1,6 @@
 # Assistant repair — living handoff
 
-Updated: 2026-11-16, 12:21 UTC. Phase: implemented and tested within the limits below.
+Updated: 2026-11-18, 14:00 UTC. Phase: autonomous routine execution repair in progress; external five-minute trigger still requires independent verification.
 
 ## Read first
 Read docs/ARCHITECTURE.md, root AGENTS.md, android/AGENTS.md, README.md and the active section of roadmap.md. Update this document at the start and end of each implementation phase, not with a background timer. Nothing continues after the agent's turn ends.
