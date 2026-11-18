@@ -48,9 +48,10 @@
 - [x] Remove provider names and unnecessarily alarming privacy wording from public pages while keeping disclosures truthful; never claim end-to-end encryption. Mobile Chromium checks passed at 434×716.
 - [ ] Production Android 1.2.6/versionCode 5: unsigned AAB built and 16 JVM tests passed; signing and Play upload still require the newly registered upload key and Console authorization.
 - [x] Repair scheduler destination to the current published host, enable the workflow and complete a real overdue five-minute routine with its next run persisted.
-- [ ] Make every scheduled bot execute the saved goal immediately with the interactive owner-scoped tools (including real Telegram reads), never answer by creating another schedule, and deliver the committed result by phone push; add regressions and verify a real run/read-back.
-- [ ] Keep the Android shell itself on the owner-required `https://app.ceyo.si` (never a Lovable preview), and deploy/verify the current autonomous-routine repair on that host before using it as the scheduler origin.
-- [ ] Restore a reliable external five-minute trigger: GitHub URL correction and manual dispatch succeeded, but no automatic `schedule` event appeared through 12:56 UTC even after workflow revalidation; continuous delivery remains unfixed.
+- [x] Make every scheduled bot execute the saved goal immediately with the interactive owner-scoped tools (including real Telegram reads), never answer by creating another schedule, and deliver the committed result by phone push; regressions and a real signed run/read-back passed at 14:06 UTC.
+- [ ] Keep the Android shell itself on the owner-required `https://app.ceyo.si` (never a Lovable preview). Built/signed 1.2.7/versionCode 7 and passed 18 JVM tests; the owner deferred domain transfer, so live-host deployment and Play upload remain held.
+- [ ] Restore a reliable external five-minute trigger: GitHub is enabled and its verification dispatch completed successfully at 14:21 UTC; observe a subsequent automatic `schedule` event before closing.
+- [ ] Clarify the 3-day subscription trial on web and Android, including renewal and eligibility, without changing prices or granting web trials that lack server verification.
 - [x] Reduce chat streaming re-renders, isolate the working timer, make composer layout keyboard-safe and skip offscreen message painting; 11 web tests passed.
 - [ ] Verify the signed-in chat composer and scrolling on the owner's phone; the sandbox has no restorable external-Supabase session.
 - [ ] Add honest WhatsApp/Telegram QR connection entry points only when a real session service exists; do not show a decorative QR or claim message access without one.

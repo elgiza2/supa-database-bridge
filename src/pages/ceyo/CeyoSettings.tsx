@@ -407,6 +407,10 @@ function Plans({ nav }: { nav: Nav }) {
         </section>
       </main>
       <footer className="subscription-footer">
+        <div className="subscription-trial" role="note">
+          <strong>{ar ? "تجربة مجانية ٣ أيام" : "3-day free trial"}</strong>
+          <span>{ar ? "أندرويد: للمشترك الجديد المؤهل، أول ٣ أيام بـ$0 عبر Google Play، ثم يتجدد الاشتراك تلقائيًا بالسعر الظاهر حتى الإلغاء. راجع الأهلية والسعر وتاريخ الدفع في Google Play قبل التأكيد. الويب: تجربة الاستخدام المجانية منفصلة ولا تبدأ اشتراكًا مدفوعًا." : "Android: eligible new subscribers pay $0 for 3 days through Google Play, then the selected plan renews automatically at the displayed price until cancelled. Review eligibility, price and charge date in Google Play before confirming. Web: the separate usage trial does not start a paid subscription."}</span>
+        </div>
         <div className="subscription-intervals" role="group" aria-label="Billing interval">
           <Button variant="ghost" aria-pressed={!yearly} onClick={() => setYearly(false)}><strong dir="auto">{localPrices.monthly !== null && localPrices.currency ? formatLocalPrice(localPrices.monthly, localPrices.currency, ar ? "ar" : "en") : "…"}</strong><span>{ar ? "الفوترة شهريًا" : "Billed monthly"}</span></Button>
           {p.yearly > 0 && <Button variant="ghost" aria-pressed={yearly} onClick={() => setYearly(true)}><strong dir="auto">{localPrices.yearly !== null && localPrices.currency ? formatLocalPrice(localPrices.yearly, localPrices.currency, ar ? "ar" : "en") : "…"}</strong><span>{ar ? "سنويًا · وفر 17%" : "Yearly · Save 17%"}</span></Button>}

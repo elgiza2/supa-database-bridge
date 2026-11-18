@@ -104,9 +104,14 @@ plan in the Google Play app under
 **Payments & subscriptions → Subscriptions**. For Google Play billing
 questions and refunds, use
 [Google Play's refund support](https://support.google.com/googleplay/answer/2479637).
-Android has no in-app trial.
+Eligible new Android subscribers can use the **3-day free trial** offered by
+Google Play. You pay $0 for the first 3 days; then the selected plan renews
+automatically at the displayed price unless you cancel before the trial ends.
+Google Play confirms your eligibility, exact price and charge date before you
+subscribe.
 
-The Ceyo Bot usage-credit trial claimed on web or desktop is separate; see
+The Ceyo Bot usage-credit trial claimed on web or desktop is separate and does
+not start a paid subscription; see
 Is there a free trial?.
 
 ## Message a Bot

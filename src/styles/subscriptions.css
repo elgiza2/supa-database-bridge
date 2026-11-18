@@ -17,6 +17,9 @@
 .subscription-benefits{display:flex;flex-direction:column;gap:13px;margin:0;padding:0;list-style:none}
 .subscription-benefits li{display:flex;align-items:start;gap:8px;font-size:13px;line-height:1.4;color:var(--subscription-ink)}.subscription-benefits svg{flex:none;width:17px;height:17px;margin-top:1px;color:var(--subscription-ink)}
 .subscription-footer{flex:none;width:100%;max-width:680px;margin:0 auto;padding:14px 24px calc(14px + max(env(safe-area-inset-bottom),var(--safe-bottom,0px)));background:var(--subscription-surface)}
+.subscription-trial{display:flex;flex-direction:column;gap:5px;margin:0 0 14px;padding:12px 14px;border:1px solid var(--subscription-line);border-radius:16px;background:var(--subscription-raised);text-align:start}
+.subscription-trial strong{font-size:14px;line-height:1.4;color:var(--subscription-ink)}
+.subscription-trial span{font-size:11px;line-height:1.55;color:var(--subscription-muted)}
 .subscription-intervals{display:flex;gap:10px;margin-bottom:16px}
 .agent-hub.subscription-page .subscription-intervals button{display:flex;flex:1;flex-direction:column;align-items:flex-start;justify-content:center;gap:5px;min-width:0;min-height:62px;height:auto;padding:12px 14px;border:1px solid var(--subscription-line)!important;border-radius:20px!important;background:transparent!important;color:var(--subscription-ink)!important;box-shadow:none!important;text-align:start}
 .agent-hub.subscription-page .subscription-intervals button[aria-pressed=true]{border:2px solid var(--subscription-highlight)!important;background:var(--subscription-choice-fill)!important;padding:11px 13px}

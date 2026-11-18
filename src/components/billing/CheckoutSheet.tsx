@@ -170,7 +170,7 @@ export function CheckoutSheet({ tier, name, interval, onClose }: { tier: Tier; n
       <p className="cbox-security"><ShieldCheck /> Activation follows verified payment.</p>
     </>
   ) : androidBilling ? (
-    <>{errorBox}<Button variant="ghost" className="cbox-cta" disabled={busy} onClick={() => void payPlay()}>{busy ? <Loader2 className="cbox-spin" /> : "Subscribe with Google Play"}</Button></>
+    <><p className="cbox-note" role="note"><strong>3-day free trial</strong><br />If eligible, you pay $0 today. After 3 days, Ceyo {name} renews automatically at {total} per {interval === "yearly" ? "year" : "month"} until cancelled. Google Play confirms your eligibility, exact price and charge date before you subscribe.</p>{errorBox}<Button variant="ghost" className="cbox-cta" disabled={busy} onClick={() => void payPlay()}>{busy ? <Loader2 className="cbox-spin" /> : "Subscribe with Google Play"}</Button></>
   ) : !kashier ? (
     <>{errorBox}<Button variant="ghost" className="cbox-cta" disabled={busy} onClick={() => void payDodo()}>{busy ? <Loader2 className="cbox-spin" /> : `Subscribe · ${total}`}</Button></>
   ) : method === "card" ? (
