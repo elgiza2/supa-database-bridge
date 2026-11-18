@@ -39,10 +39,12 @@
 # Current requests (Nov 2026)
 
 ## Chat reliability, recurring messaging, public copy and Android update — 2026-11-18
-- [ ] Remove provider names and unnecessarily alarming privacy wording from public pages while keeping disclosures truthful; never claim end-to-end encryption.
-- [ ] Prepare and verify the next production Android AAB; Play upload requires the newly registered upload key and Console authorization.
-- [ ] Repair five-minute routine delivery and verify a real due run after publication; external scheduler credentials are not currently available in this sandbox.
-- [ ] Reduce chat streaming re-renders and keep the composer stable when the mobile keyboard opens/closes; verify on the phone-sized preview.
+- [x] Remove provider names and unnecessarily alarming privacy wording from public pages while keeping disclosures truthful; never claim end-to-end encryption. Mobile Chromium checks passed at 434×716.
+- [ ] Production Android 1.2.6/versionCode 5: unsigned AAB built and 16 JVM tests passed; signing and Play upload still require the newly registered upload key and Console authorization.
+- [x] Repair scheduler destination to the current published host, enable the workflow and complete a real overdue five-minute routine with its next run persisted.
+- [ ] Observe a later GitHub `schedule` event after the repair; manual verification dispatch succeeded, but continuous five-minute delivery is not yet proven.
+- [x] Reduce chat streaming re-renders, isolate the working timer, make composer layout keyboard-safe and skip offscreen message painting; 11 web tests passed.
+- [ ] Verify the signed-in chat composer and scrolling on the owner's phone; the sandbox has no restorable external-Supabase session.
 - [ ] Add honest WhatsApp/Telegram QR connection entry points only when a real session service exists; do not show a decorative QR or claim message access without one.
 
 - [ ] Exercise the real agent with reasoning, coding/execution, image-analysis and project-editing tasks; independently verify artifacts rather than trusting prose.

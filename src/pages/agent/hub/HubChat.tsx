@@ -400,7 +400,7 @@ export function HubChat({
     };
     window.addEventListener("ceyo-call-task", onTask);
     return () => window.removeEventListener("ceyo-call-task", onTask);
-  }, [sessionId, s]);
+  }, [sessionId, s.send]);
 
   const [bgJob, setBgJob] = useState(false);
   useEffect(() => {

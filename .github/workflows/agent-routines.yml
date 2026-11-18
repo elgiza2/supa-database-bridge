@@ -1,3 +1,4 @@
+# Production schedule revalidated 2026-11-18
 name: Ceyo recurring tasks
 on:
   schedule:

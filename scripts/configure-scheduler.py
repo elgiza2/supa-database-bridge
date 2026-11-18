@@ -17,7 +17,7 @@ from nacl.public import PublicKey, SealedBox
 origin = os.environ.get('APP_URL', 'https://web.ceyo.si').rstrip('/')
 from urllib.parse import urlparse
 host = urlparse(origin)
-approved_test = args.test_lovable and origin == 'https://tap-to-trial-subscription.lovable.app'
+approved_test = args.test_lovable and origin == 'https://supa-database-bridge.lovable.app'
 if host.scheme != 'https' or not host.hostname or (host.hostname.endswith(('.lovable.app', '.lovable.dev')) and not approved_test) or host.username or host.password:
     raise RuntimeError('Use an independent HTTPS application address.')
 repo = '/repos/elgizaiiio/ceyo-private-scheduler'

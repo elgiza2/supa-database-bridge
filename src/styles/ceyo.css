@@ -409,6 +409,7 @@ html[data-ceyo-surface="bot"] .agent-hub.ceyo-page{--ceyo-page-bg:#1b1b20;--ceyo
 .cx-empty{display:grid;height:100%;place-items:center}
 .cx-column{display:flex;max-width:760px;min-height:100%;flex-direction:column;justify-content:flex-end;gap:10px;margin:0 auto;padding:calc(max(14px,env(safe-area-inset-top)) + 70px) 16px 18px;transition:transform .25s cubic-bezier(.16,1,.3,1)}
 .cx-row-wrap{position:relative}
+@supports(content-visibility:auto){.cx-row-wrap{content-visibility:auto;contain-intrinsic-size:auto 120px}}
 .cx-day{margin:14px 0 8px;color:var(--cx-mute);font-size:13px;text-align:center}
 .cx-row{position:relative;display:flex;align-items:flex-end;gap:8px}
 .cx-row-user{justify-content:flex-end}
