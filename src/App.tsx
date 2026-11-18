@@ -178,15 +178,15 @@ const App = () => {
                   <ConfirmProvider>
                     <DynamicNotifications>
                     <ScrollToTop />
-                    <PageViewTracker />
-                    <ReminderWatcher />
+                    <ErrorBoundary silent><PageViewTracker /></ErrorBoundary>
+                    <ErrorBoundary silent><ReminderWatcher /></ErrorBoundary>
                     <InternalLinkInterceptor />
 
                     <Suspense fallback={null}>
-                      <CostConfirmationHost />
-                      <CeyoConfirmHost />
-                      <BackgroundJobNotifier />
-                      {currentUserId && <CallHost />}
+                      <ErrorBoundary silent><CostConfirmationHost /></ErrorBoundary>
+                      <ErrorBoundary silent><CeyoConfirmHost /></ErrorBoundary>
+                      <ErrorBoundary silent><BackgroundJobNotifier /></ErrorBoundary>
+                      {currentUserId && <ErrorBoundary silent><CallHost /></ErrorBoundary>}
                     </Suspense>
 
                     <Suspense fallback={<LazyFallback />}>

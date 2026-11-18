@@ -1,5 +1,5 @@
 const CHUNK_ERROR_RE =
-  /(Failed to fetch dynamically imported module|Importing a module script failed|Loading chunk \d+ failed|ChunkLoadError|Loading CSS chunk)/i;
+  /(Failed to fetch dynamically imported module|Importing a module script failed|Loading chunk \d+ failed|ChunkLoadError|Loading CSS chunk|Class extends value .* is not a constructor|error loading dynamically imported module)/i;
 
 const RECOVERY_KEY = "__megsy_chunk_recovery";
 const RECOVERY_WINDOW_MS = 60_000;

@@ -15,7 +15,8 @@ export function readCache<T>(key: string, owner = cachedOwner()): T | null {
     const raw = localStorage.getItem(PREFIX + owner + ":" + key);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as { o: string; v: T };
-    return parsed && parsed.o === owner ? parsed.v : null;
+    if (!parsed || parsed.o !== owner) return null;
+    return clean(parsed.v) as T;
   } catch { return null; }
 }
 
@@ -28,4 +29,17 @@ export function writeCache(key: string, value: unknown, owner = cachedOwner()): 
   } catch {
     /* quota full: caching is best-effort */
   }
+}
+
+/** Drop null/id-less rows from cached lists so a corrupt entry can't crash a screen. */
+function clean(v: unknown): unknown {
+  if (Array.isArray(v)) {
+    return v.filter((r) => r != null && (typeof r !== "object" || !("id" in (r as object)) || (r as { id: unknown }).id != null)).map(clean);
+  }
+  if (v && typeof v === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [k, x] of Object.entries(v)) out[k] = clean(x);
+    return out;
+  }
+  return v;
 }

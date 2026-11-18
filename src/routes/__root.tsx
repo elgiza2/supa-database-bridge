@@ -82,7 +82,7 @@ const CLARITY_SCRIPT = `(function(c,l,a,r,i,t,y){
 
 const DEFERRED_FONTS_SCRIPT = `(function () {
   var HREF =
-    "https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Arabic:wght@400;600;700&family=Almarai:wght@300;400;700;800&family=Cairo:wght@400;500;600;700&family=Tajawal:wght@400;500;700&family=Readex+Pro:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Sora:wght@400;500;600;700;800&family=Archivo+Black&family=Manrope:wght@400;500;600;700&display=swap";
+    "https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Arabic:wght@400;600;700&family=Cairo:wght@400;500;600;700&family=Tajawal:wght@400;500;700&family=Readex+Pro:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap";
   var EXTRA =
     "https://db.onlinewebfonts.com/c/e66905e07608167a84e6ad52f638c3c6?family=Helvetica+Now+Var";
   function add(href) {
@@ -97,7 +97,7 @@ const DEFERRED_FONTS_SCRIPT = `(function () {
       if (c.saveData) return;
       if (/2g/.test(c.effectiveType || "")) return;
     } catch (e) {}
-    var run = function () { add(HREF); add(EXTRA); };
+    var run = function () { add(HREF); };
     if (window.requestIdleCallback) requestIdleCallback(run, { timeout: 3000 });
     else setTimeout(run, 800);
   }

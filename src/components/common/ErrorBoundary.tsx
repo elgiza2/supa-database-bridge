@@ -7,10 +7,13 @@ import { isChunkLoadError, recoverFromChunkLoadError } from "@/lib/chunkRecovery
 interface Props {
   children: ReactNode;
   resetKey?: string;
+  /** Render nothing on failure (background hosts). */
+  silent?: boolean;
 }
 
 interface State {
   hasError: boolean;
+  retried?: boolean;
   error?: Error;
 }
 
@@ -38,16 +41,21 @@ class ErrorBoundary extends Component<Props, State> {
     // React.lazy permanently caches a rejected import. Resetting this boundary
     // only throws the same error again and eventually causes React #185.
     // Recover a stale deploy with one guarded reload instead.
-    recoverFromChunkLoadError(error);
+    if (recoverFromChunkLoadError(error)) return;
+    // Transient render errors (stale cache rows mid-sync): retry once silently.
+    if (!this.state.retried) {
+      setTimeout(() => this.setState({ hasError: false, error: undefined, retried: true }), 300);
+    }
   }
 
   componentDidUpdate(prev: Props) {
     if (prev.resetKey !== this.props.resetKey && this.state.hasError) {
-      this.setState({ hasError: false, error: undefined });
+      this.setState({ hasError: false, error: undefined, retried: false });
     }
   }
 
   render() {
+    if (this.state.hasError && (this.props.silent || !this.state.retried)) return null;
     if (this.state.hasError) {
       const raw = this.state.error?.message ?? "";
       // Never leak raw "Minified React error #185; visit https://react.dev/..."
