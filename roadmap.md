@@ -706,3 +706,6 @@
 - [ ] Server secrets from the old project (PUBLIC_APP_URL, Cerebras etc. env fallbacks) are not in this project's secret store; keys in the provider_api_keys pool keep working
 
 - [x] Voice calls moved to Vapi (one engine); power/home long-press opens a live call via /?ceyoCall=1 (v15). Needs: Publish + real phone test.
+
+- [x] Speed pass: Google Sans no longer blocks first paint; unused fonts removed; landing chunk starts early; Arabic font only for Arabic landing.
+- [ ] Split the 500KB app stylesheet so the website does not download app styles (larger refactor).

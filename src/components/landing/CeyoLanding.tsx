@@ -44,7 +44,7 @@ export default function CeyoLanding() {
       .replace("{{faqRows}}", faqs)
       .replace(/\{\{(\w+)\}\}/g, (_, k: string) => esc(values[k] ?? ""))
       .replace('<html lang="en">', `<html lang="${lang}" dir="${ar ? "rtl" : "ltr"}">`)
-      .replace("</head>", '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&amp;display=swap"></head>');
+      .replace("</head>", ar ? '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&amp;display=swap"></head>' : "</head>");
   }, [lang]);
 
   useEffect(() => {

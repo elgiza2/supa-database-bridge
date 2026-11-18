@@ -8,7 +8,9 @@ const isLanding = typeof window !== "undefined" && showsLanding(window.location.
 // Start the app download as soon as this route loads, exactly like a static import.
 const spaModule = typeof window !== "undefined" && !isLanding ? import("@/lib/spaMount") : null;
 const SpaMount = lazy(() => (spaModule ?? import("@/lib/spaMount")).then((m) => ({ default: m.SpaMount })));
-const CeyoLanding = lazy(() => import("@/components/landing/CeyoLanding"));
+// Same early start for the landing chunk so the website paints one round-trip sooner.
+const landingModule = isLanding ? import("@/components/landing/CeyoLanding") : null;
+const CeyoLanding = lazy(() => landingModule ?? import("@/components/landing/CeyoLanding"));
 
 function Home() {
   const landing = isLanding;
