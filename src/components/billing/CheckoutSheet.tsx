@@ -93,7 +93,11 @@ export function CheckoutSheet({ tier, name, interval, onClose }: { tier: Tier; n
     return () => clearInterval(t);
   }, [orderId, state, check]);
 
-  const fail = (e: unknown) => { setState("error"); setError(userErrorText(e)); };
+  const fail = (e: unknown) => {
+    // Android: closing Google Play's own sheet just returns to the plans, with no extra card.
+    if (androidBilling && /cancel/i.test(String((e as Error)?.message ?? e))) { onClose(); return; }
+    setState("error"); setError(userErrorText(e));
+  };
 
   const payPlay = async () => {
     setState("loading");
@@ -192,6 +196,8 @@ export function CheckoutSheet({ tier, name, interval, onClose }: { tier: Tier; n
     </form>
   );
   if (typeof document === "undefined") return null;
+  // Android shows only Google Play's sheet; our box appears just for success or a real error.
+  if (androidBilling && state !== "paid" && state !== "error") return null;
   return createPortal(
     <section className="cbox-screen" dir="ltr" role="dialog" aria-modal="true" aria-label="Checkout" tabIndex={-1} onClick={(event) => { if (event.target === event.currentTarget) onClose(); }}>
       <div className="cbox-wrap">
