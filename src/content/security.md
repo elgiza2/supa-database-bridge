@@ -8,7 +8,7 @@ Security information for Ceyo, operated by **Megsy LLC**.
 Sign-in sessions and account-scoped access rules restrict workspace data. Connected-service actions must use an authorized account; operations that change external data require the relevant approval flow. Review approvals carefully and disconnect services you no longer need.
 
 ## Encryption & private content
-Hosted network traffic uses HTTPS. Chats, memories and documents are **not end-to-end encrypted**; relevant content is processed by the services needed to generate a response. Device-local Vault labels and voice recordings are not an encrypted password vault. Do not use them for private keys, recovery phrases, full payment-card details or passwords.
+Hosted network traffic uses HTTPS. Account-scoped access rules protect chats, memories and documents, and only authorized processing can access the content needed to answer a request. Device-local Vault labels and voice recordings are not an encrypted password vault. Do not use them for private keys, recovery phrases, full payment-card details or passwords.
 
 ## Service credentials
 Service credentials are restricted to server-side operations and are never shipped to the browser. Sensitive administration credentials use server-only protected storage; other provider credentials are isolated behind server access controls. We review access boundaries and investigate reported concerns, without claiming that any online service is risk-free.
