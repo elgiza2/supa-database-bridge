@@ -3,6 +3,7 @@ import type { RecordingOrigin } from "@/lib/audio/agentVoice";
  *  that lets the user type while the agent works (queued messages go out when it finishes). */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { agentApi, onSessionChanged, openStream, type AgentRequest, type RawEvent } from "@/lib/agentsky/client";
+import { readCache, writeCache } from "@/lib/offlineCache";
 import { buildTranscript, type Lang } from "@/lib/agentsky/transcript";
 
 export type Queued = { id: string; text: string; images: string[] };
@@ -34,6 +35,7 @@ export function useAgentSession(sessionId: string | null, lang: Lang) {
       return next;
     });
     setRunning(r.status === "running");
+    if (r.status !== "running") writeCache("events:" + sid, r.events.slice(-120));
   }, []);
 
   const loadRequests = useCallback(async (sid: string) => {
@@ -46,18 +48,21 @@ export function useAgentSession(sessionId: string | null, lang: Lang) {
   }, []);
 
   useEffect(() => {
-    setEvents([]);
+    // Show the last saved conversation instantly, then refresh in the background.
+    const cached = sessionId ? readCache<RawEvent[]>("events:" + sessionId) : null;
+    const initial = Array.isArray(cached) ? cached.filter((e) => e && typeof e.id === "string") : [];
+    setEvents(initial);
     setRunning(false);
     setQueue([]);
     setRequests([]);
     setError(null);
-    seen.current = new Set();
+    seen.current = new Set(initial.map((e) => e.id));
     setLoading(false);
     if (!sessionId) return;
     const sid = sessionId;
     const ctl = new AbortController();
     let retry = 0;
-    setLoading(true);
+    if (!initial.length) setLoading(true);
     reload(sid)
       .catch((e) => { if (!ctl.signal.aborted) setError(e.message); })
       .finally(() => { if (!ctl.signal.aborted) setLoading(false); });

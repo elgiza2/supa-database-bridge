@@ -1,6 +1,7 @@
 /** @doc Tiny shared store for the agent workspace: agents, plan tier, media models and recent sessions. */
 import { useEffect, useSyncExternalStore } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { cachedOwner, readCache, writeCache } from "@/lib/offlineCache";
 import { agentApi, type AgentInfo, type MediaModelInfo, type SessionInfo } from "./client";
 
 type State = {
@@ -20,10 +21,19 @@ const emptyState = (): State => ({
   models: [],
   sessions: [],
 });
-let state: State = emptyState();
+type CachedWs = Pick<State, "agents" | "tier" | "models" | "sessions">;
+const fromCache = (owner: string | null): State | null => {
+  const c = readCache<CachedWs>("workspace", owner);
+  return c && Array.isArray(c.agents) ? { ...emptyState(), ...c, ready: true, sessions: Array.isArray(c.sessions) ? c.sessions : [] } : null;
+};
+// Paint the last known workspace instantly; the network refresh replaces it.
+let state: State = fromCache(cachedOwner()) ?? emptyState();
 const subs = new Set<() => void>();
 const set = (p: Partial<State>) => {
   state = { ...state, ...p };
+  if (state.ready && !state.error && workspaceOwner) {
+    writeCache("workspace", { agents: state.agents, tier: state.tier, models: state.models, sessions: state.sessions.slice(0, 60) }, workspaceOwner);
+  }
   subs.forEach((f) => f());
 };
 
@@ -56,6 +66,8 @@ export function loadWorkspace(force = false) {
       });
     } catch (e: unknown) {
       if (generation === loadGeneration) {
+        // Offline/failed refresh keeps the cached workspace on screen.
+        if (state.agents.length) { set({ ready: true }); return; }
         set({ ready: true, error: e instanceof Error ? e.message : "Could not load" });
       }
     } finally {
@@ -73,7 +85,8 @@ function syncWorkspaceOwner(userId: string | null) {
   workspaceOwner = userId;
   loadGeneration++;
   loading = null;
-  set(emptyState());
+  state = fromCache(userId) ?? emptyState();
+  subs.forEach((f) => f());
   if (userId) void loadWorkspace(true);
 }
 

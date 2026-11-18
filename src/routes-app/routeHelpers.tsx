@@ -1,3 +1,4 @@
+import { cachedOwner } from "@/lib/offlineCache";
 import { useEffect, useState, useTransition, useDeferredValue } from "react";
 import { Routes, Navigate, useLocation, useNavigate } from "react-router-dom";
 import PageTransition from "@/components/common/PageTransition";
@@ -140,6 +141,9 @@ export const ProtectedRoute = ({ children, guestEntry }: { children: React.React
 
   const location = useLocation();
 
+  // A returning account opens instantly from its cached screens; if the session
+  // turns out to be gone, resolution below redirects to sign-in.
+  if (!state.resolved && cachedOwner()) return <>{children}</>;
   if (!state.resolved) {
     return (
       <div className="flex min-h-dvh items-center justify-center bg-background px-6">

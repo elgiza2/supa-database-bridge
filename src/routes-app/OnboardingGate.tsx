@@ -3,13 +3,15 @@ import { Navigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { getAuthState } from "@/lib/authStore";
+import { cachedOwner, readCache, writeCache } from "@/lib/offlineCache";
 
 const completedAccounts = new Set<string>();
 
 /** Sends signed-in users who haven't finished first-run setup to /onboarding. */
 export function OnboardingGate({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<"wait" | "ok" | "setup" | "error">(() => {
-    const id = getAuthState().userId;
+    const id = getAuthState().userId || cachedOwner();
+    if (id && readCache<boolean>("onboarded", id)) completedAccounts.add(id);
     return id && completedAccounts.has(id) ? "ok" : "wait";
   });
   const [attempt, setAttempt] = useState(0);
@@ -30,7 +32,7 @@ export function OnboardingGate({ children }: { children: React.ReactNode }) {
           const { count } = await supabase.from("bots").select("id", { count: "exact", head: true }).eq("owner_id", user.id);
           done = (count ?? 0) > 0;
         }
-        if (done) completedAccounts.add(user.id);
+        if (done) { completedAccounts.add(user.id); writeCache("onboarded", true, user.id); }
         if (active) setState(done ? "ok" : "setup");
       } catch { if (active) setState("error"); }
     })();

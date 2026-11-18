@@ -9,8 +9,8 @@ export function AndroidSplash() {
   useEffect(() => {
     if (!isPlayApp()) return;
     setShow(true);
-    const t1 = setTimeout(() => setLeaving(true), 1400);
-    const t2 = setTimeout(() => setShow(false), 1800);
+    const t1 = setTimeout(() => setLeaving(true), 120);
+    const t2 = setTimeout(() => setShow(false), 320);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
   if (!show) return null;

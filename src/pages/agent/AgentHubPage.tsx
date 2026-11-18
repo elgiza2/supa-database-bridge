@@ -28,6 +28,7 @@ import { Button } from "@/components/ui/button";
 import { SubscriptionStar } from "@/components/common/SubscriptionStar";
 import "@/styles/subscriptions.css";
 import { supabase } from "@/integrations/supabase/client";
+import { cachedOwner, readCache, writeCache } from "@/lib/offlineCache";
 import { agentApi, type AgentInfo, type SessionInfo } from "@/lib/agentsky/client";
 import { loadWorkspace, useWorkspaceStore, workspace } from "@/lib/agentsky/store";
 import { promptUpgrade } from "@/lib/upgradeMoment";
@@ -90,7 +91,7 @@ export default function AgentHubPage({ demo = false }: { demo?: boolean }) {
   const ar = lang === "ar";
   const nav = useNavigate();
   const [params, setParams] = useSearchParams();
-  const [userId, setUserId] = useState(demo ? "demo" : "");
+  const [userId, setUserId] = useState(() => (demo ? "demo" : cachedOwner() || ""));
   const [userAvatar, setUserAvatar] = useState("");
   const [userInitial, setUserInitial] = useState("C");
   const [local, setLocal] = useState<HubLocalState>(demo ? { ...EMPTY_HUB_LOCAL, groups: [DEMO_GROUP] } : EMPTY_HUB_LOCAL);
@@ -183,15 +184,22 @@ export default function AgentHubPage({ demo = false }: { demo?: boolean }) {
     ? ws.agents.find((agent) => agent.id === (activeTarget.kind === "group" ? activeGroup?.coordinatorId : activeTarget.id))
     : null;
   const activeSessions = activeAgent ? ws.sessions.filter((session) => session.agentId === activeAgent.id) : [];
-  const [resolvedThread, setResolvedThread] = useState<{ botId: string; id: string } | null>(null);
+  const [resolvedThread, setResolvedThread] = useState<{ botId: string; id: string } | null>(() => {
+    if (demo || !activeAgent) return null;
+    const id = readCache<string>("thread:" + activeAgent.id);
+    return typeof id === "string" ? { botId: activeAgent.id, id } : null;
+  });
   const selectedSession = chatTarget && resolvedThread?.botId === activeAgent?.id ? resolvedThread.id : null;
   useEffect(() => {
     if (demo || !chatTarget || !activeAgent) return;
     let active = true;
+    const known = readCache<string>("thread:" + activeAgent.id);
+    if (typeof known === "string") setResolvedThread((cur) => cur?.botId === activeAgent.id ? cur : { botId: activeAgent.id, id: known });
     void agentApi.openBotThread(activeAgent.id).then(({ session }) => {
       if (!active) return;
       workspace.upsertSession(session);
       setResolvedThread({ botId: activeAgent.id, id: session.id });
+      writeCache("thread:" + activeAgent.id, session.id);
     }).catch((error) => { if (active) toast.error(error instanceof Error ? error.message : "Could not open your chat"); });
     return () => { active = false; };
   }, [demo, chatTarget?.kind, chatTarget?.id, activeAgent?.id]);
