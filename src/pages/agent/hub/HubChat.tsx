@@ -1,5 +1,5 @@
 import { consumePhonePrompt, phoneLiveEnd, phoneLiveUpdate, phoneReply, phoneSpeak, takePhoneVoiceReply } from "@/lib/native/assistantBridge";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { FormattedAnswer } from "@/components/chat/FormattedAnswer";
 import { appCopyRestricted } from "@/lib/appInteractionPolicy";
 import { ChatLink } from "@/components/chat/ChatLink";
@@ -357,9 +357,10 @@ export function HubChat({
     const el = scroller.current;
     if (!el || typeof ResizeObserver === "undefined") return;
     const ro = new ResizeObserver(() => { if (pinnedRef.current) el.scrollTop = el.scrollHeight; });
-    Array.from(el.children).forEach((c) => ro.observe(c));
+    ro.observe(el);
+    if (el.firstElementChild) ro.observe(el.firstElementChild);
     return () => ro.disconnect();
-  });
+  }, [s.turns.length === 0]);
   useEffect(() => { if (!demo && !s.running) void refreshSessions(); }, [s.running, demo]);
   useEffect(() => {
     // Refresh once when returning to the tab instead of polling every few seconds.
@@ -512,12 +513,6 @@ export function HubChat({
   useEffect(() => {
     setBusy(rawBusy);
   }, [rawBusy]);
-  const [tick, setTick] = useState(0);
-  useEffect(() => {
-    if (!busy) { setTick(0); return; }
-    const t = window.setInterval(() => setTick((n) => n + 1), 1800);
-    return () => window.clearInterval(t);
-  }, [busy]);
   const lastActivity = useRef<{ bot: AgentInfo; state: "thinking" | "tool" | "talking" } | null>(null);
   // Who is busy right now and what they are doing (thinking / using a tool / writing).
   const activity = useMemo(() => {
@@ -561,6 +556,8 @@ export function HubChat({
 
   const placeholder = group ? (ar ? "اسأل فريقك…" : "Ask your team…") : ar ? `رسالة لـ ${title}` : `Message ${title}`;
   const empty = bubbles.length === 0;
+  const decorateAnswer = useCallback((children: ReactNode) => mentionify(children, group, agents), [group, agents]);
+  const sendAnswer = useCallback((text: string) => { void s.send(text); }, [s.send]);
 
   return (
     <section className="cx-chat" data-has-pins={pinnedBubbles.length > 0 || undefined} aria-label={`${title} conversation`}>
@@ -659,7 +656,7 @@ export function HubChat({
                         {voiceReply && input ? <VoiceMessage text={b.text} recordingId={`${input.turn.recordingId || input.turnId}:${b.partIndex}`} agentId={speaker.id} agentIds={agents.map((a) => a.id)} settings={settings} ar={ar} /> : b.text && (
                           <div className="cx-bubble cx-bubble-agent" data-hit={hit} data-select={selectable === b.key} dir="auto" {...handlers}>
                             {q ? <p><Highlight text={b.text} q={q} /></p> : (
-                              <FormattedAnswer text={b.text} decorate={(children) => mentionify(children, group, agents)} onSend={(text) => { void s.send(text); }} />
+                              <FormattedAnswer text={b.text} decorate={decorateAnswer} onSend={sendAnswer} />
                             )}
                             {reaction && <em className="cx-reaction">{reaction}</em>}
                           </div>
@@ -702,15 +699,17 @@ export function HubChat({
             {bgJob && !activity.length && <div className="cx-working" key="bg"><BotAvatar agent={agent} size={30} state="tool" /><span dir="auto" className="cx-working-text"><span className="cx-shimmer">{ar ? "لسه شغال على مهمتك في الخلفية…" : "Still working on your task in the background…"}</span></span></div>}
             {activity.slice(0, 1).map(({ bot, state }) => {
               const lastUserText = [...s.turns].reverse().find((t) => t.type === "user")?.text || "";
-              const label = workingLabel(lastAgent?.steps || [], state, tick, /[\u0600-\u06FF]/.test(lastUserText) || (!lastUserText && ar));
               const others = group ? Math.max(0, group.memberIds.filter((id) => id !== bot.id).length) : 0;
               return (
                 <div className="cx-working" key="working">
                   <BotAvatar agent={bot} size={30} state={state} />
-                  <span dir="auto" className="cx-working-text">
-                    {group && <b>{bot.name}{others > 0 && <span className="cx-working-others"> +{others} {ar ? "آخرون" : "others"}</span>} </b>}
-                    <span key={label} className="cx-shimmer cx-label-swap">{label}</span>
-                  </span>
+                  <WorkingStatus
+                    steps={lastAgent?.steps || []}
+                    state={state}
+                    ar={/[\u0600-\u06FF]/.test(lastUserText) || (!lastUserText && ar)}
+                    groupName={group ? bot.name : undefined}
+                    others={others}
+                  />
                 </div>
               );
             })}
@@ -771,6 +770,27 @@ export function HubChat({
         </>
       )}
     </section>
+  );
+}
+
+function WorkingStatus({ steps, state, ar, groupName, others }: {
+  steps: { kind: string; label: string; status: string }[];
+  state: "thinking" | "tool" | "talking";
+  ar: boolean;
+  groupName?: string;
+  others: number;
+}) {
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const timer = window.setInterval(() => setTick((value) => value + 1), 1800);
+    return () => window.clearInterval(timer);
+  }, []);
+  const label = workingLabel(steps, state, tick, ar);
+  return (
+    <span dir="auto" className="cx-working-text">
+      {groupName && <b>{groupName}{others > 0 && <span className="cx-working-others"> +{others} {ar ? "آخرون" : "others"}</span>} </b>}
+      <span key={label} className="cx-shimmer cx-label-swap">{label}</span>
+    </span>
   );
 }
 

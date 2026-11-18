@@ -1,4 +1,4 @@
-import { lazy, Suspense, type ReactNode } from "react";
+import { lazy, memo, Suspense, type ReactNode } from "react";
 import { ClientOnly } from "@tanstack/react-router";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -12,7 +12,7 @@ import "@/styles/chat-previews.css";
 
 const VisualWidget = lazy(() => import("./VisualWidget"));
 
-export function FormattedAnswer({ text, onSend, decorate }: { text: string; onSend?: (text: string) => void; decorate?: (children: ReactNode) => ReactNode }) {
+function FormattedAnswerContent({ text, onSend, decorate }: { text: string; onSend?: (text: string) => void; decorate?: (children: ReactNode) => ReactNode }) {
   return <div className="cx-formatted-answer">{splitVisualAnswer(text).map((part, i) => part.kind === "widget"
     ? <ClientOnly key={i}><Suspense fallback={<p role="status">Preparing visual…</p>}><VisualWidget html={part.content} onSend={onSend} /></Suspense></ClientOnly>
     : <ReactMarkdown key={i} remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[[rehypeKatex, { strict: "ignore", throwOnError: false }]]} components={{
@@ -22,3 +22,6 @@ export function FormattedAnswer({ text, onSend, decorate }: { text: string; onSe
       table: ({ children }) => <div className="cx-answer-table" role="region" aria-label="Answer table" tabIndex={0}><table>{children}</table></div>,
     }}>{normalizeMathDelimiters(part.content)}</ReactMarkdown>)}</div>;
 }
+
+// Streaming one reply must not re-parse the Markdown and math in older messages.
+export const FormattedAnswer = memo(FormattedAnswerContent);

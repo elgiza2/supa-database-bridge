@@ -37,6 +37,14 @@
 - [x] Build/sign Ceyo Try v8 APK with matching v7 certificate; 11 native + 11 web tests; request Lovable publishing. Device voice/notifications and hosted private session not verified.
 
 # Current requests (Nov 2026)
+
+## Chat reliability, recurring messaging, public copy and Android update — 2026-11-18
+- [ ] Remove provider names and unnecessarily alarming privacy wording from public pages while keeping disclosures truthful; never claim end-to-end encryption.
+- [ ] Prepare and verify the next production Android AAB; Play upload requires the newly registered upload key and Console authorization.
+- [ ] Repair five-minute routine delivery and verify a real due run after publication; external scheduler credentials are not currently available in this sandbox.
+- [ ] Reduce chat streaming re-renders and keep the composer stable when the mobile keyboard opens/closes; verify on the phone-sized preview.
+- [ ] Add honest WhatsApp/Telegram QR connection entry points only when a real session service exists; do not show a decorative QR or claim message access without one.
+
 - [ ] Exercise the real agent with reasoning, coding/execution, image-analysis and project-editing tasks; independently verify artifacts rather than trusting prose.
 - [ ] Exercise page design, agent management, buttons and interactive controls across mobile and desktop, with screenshots and concrete failures; device-only/native checks remain excluded.
 - [ ] Direct Play update: Google rejected versionCode 3 because the supplied signing key is not the registered upload key; needs the original upload key or owner-approved Play Console upload-key reset. Existing alpha closed-testing release remains versionCode 2; no tester lists changed.

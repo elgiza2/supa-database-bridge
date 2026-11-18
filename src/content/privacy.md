@@ -1,6 +1,6 @@
 # Privacy Policy
 
-_Last updated: November 7, 2026_
+_Last updated: November 18, 2026_
 
 This policy explains what **Megsy LLC** ("Megsy", "we") collects when you use Ceyo, why, and the choices you have.
 
@@ -21,29 +21,26 @@ The Vault screen in settings stores account-scoped labels on the current device.
 - to provide support and communicate with you about your account;
 - to meet legal obligations.
 
-Chats are processed to provide requested functionality. The site also contains analytics and advertising measurement tools; their handling must not be confused with AI processing. Providers' own processing terms apply. Do not assume provider training or retention is disabled unless it has been confirmed for the specific service and account.
+Chats are processed only to provide the functionality you request. Optional analytics and advertising measurement are separate from AI processing. We use service partners under their own processing terms and limit the information sent to what the selected feature needs.
 
 ## 3. Who processes it
-Depending on the feature you use, data is processed by:
-- **Supabase** for account authentication and persisted account/workspace data;
-- the current hosting service for application requests and operational logs;
-- **Cerebras** for AI replies, including relevant conversation context, instructions and memories;
-- **Cartesia** for transcription and speech generation;
-- **Browserbase** for requested web-page reading;
-- **Composio** and the connected app for authorized integration operations;
-- the configured email delivery service for account messages.
+Depending on the feature you use, we use service partners for:
+- account authentication and workspace storage;
+- application hosting, security and operational diagnostics;
+- AI replies, including the relevant conversation context, instructions and memories;
+- voice transcription and generated speech;
+- requested web-page reading and authorized app operations;
+- account and support email delivery.
 
-The site currently includes **Google Tag Manager**, **Microsoft Clarity** and **TikTok Pixel** for analytics, interaction measurement or advertising/conversion measurement. TikTok purchase-event code can send transaction/event information, page URL, referrer, browser details, tracking-cookie identifiers and available account identifiers/contact information to the configured event service. **AdRoll/NextRoll** retargeting code is conditional on the site's stored acceptance flag. The actual tags inside a third-party tag-manager account and hosted event-service configuration are not fully verified by this notice. A stored flag or publication of this policy is not proof that every optional tracking path meets applicable consent requirements.
+Optional measurement tools may process visits, interactions, conversions and browser identifiers. Advertising event code can include transaction/event information, page URL, referrer and available campaign identifiers. Optional retargeting loads only when the site's acceptance flag is present. Connected apps and messaging services apply their own privacy policies to information you choose to send them.
 
-Provider availability and configuration can change. A connected app's own privacy policy governs data received by that app. Telegram processes interactions when you use Telegram features; administrator credential entry is separate from ordinary user chats.
-
-We may also disclose information when required by law or to protect the rights and safety of users and the public.
+We may also disclose information when required by law or to protect the rights and safety of users and the public. We do not sell your private chats, memories or documents.
 
 ## 4. How long we keep it
-Workspace data is persisted to support your account and its history. Available deletion controls remove items from the active workspace, but deletion from that view is not a promise of immediate removal from backups, operational logs or external providers. Retention can depend on security, billing, legal requirements and provider policies. No fixed backup-expiry or account-deletion completion period is promised here. Contact us to request deletion or clarify the status of a request. Device-local copies may require separate removal on each device.
+Workspace data is persisted to support your account and its history. Available deletion controls remove items from the active workspace, and you can contact us to request account deletion or ask about a request. Retention can depend on security, billing and legal requirements. Device-local copies may require separate removal on each device.
 
 ## 5. Security
-Account access controls restrict workspace data to authorized users. Network requests use HTTPS on hosted deployments. Chats, memories and documents are **not end-to-end encrypted**: authorized processing services must access relevant content to answer requests. Device-local data is not a substitute for encrypted secret storage. See [Security](/security) for scope and reporting. No system is perfectly secure.
+Account access controls restrict workspace data to authorized users, and hosted network requests use HTTPS. Only authorized processing can access the content needed to answer your requests. Device-local data is not a substitute for encrypted secret storage. See [Security](/security) for scope and reporting.
 
 ## 6. Your rights
 Depending on applicable law, you may have rights to access, correct, export or delete data, restrict or object to processing, or complain to a relevant authority. Email us with the request type; do not include passwords or unnecessary sensitive documents. We may need to verify account ownership. Applicable legal response deadlines apply; we do not specify an invented universal deadline.
@@ -52,7 +49,7 @@ Depending on applicable law, you may have rights to access, correct, export or d
 Use must comply with applicable age and guardian-consent requirements. The setup age selector is not independent age verification. Contact us if you believe a child has used the Service without required authorization so we can review the account and appropriate steps.
 
 ## 8. International transfers
-Providers may process data outside your country. The actual region and transfer arrangements depend on their configuration and terms. This policy does not claim a particular data-residency commitment or certification.
+Service partners may process data outside your country. The region and transfer arrangements depend on the selected feature and its configuration. Contact us if you have a question about international processing.
 
 ## 9. Changes
 If we change this policy we will update the date above and notify you in the app when the change is significant.
