@@ -38,6 +38,10 @@
 
 # Current requests (Nov 2026)
 
+## Direct Google Play upload — 2026-11-18
+- [ ] Sign production Android 1.2.6/versionCode 5 with the owner-supplied upload-key material, verify the certificate and AAB, then upload it to the intended Play Console track without changing testers, pricing or release rollout.
+- [ ] Confirm the uploaded release through Play Console/API read-back; stop for Google login, two-factor authentication or missing upload-key file rather than claiming publication.
+
 ## Chat reliability, recurring messaging, public copy and Android update — 2026-11-18
 - [x] Remove provider names and unnecessarily alarming privacy wording from public pages while keeping disclosures truthful; never claim end-to-end encryption. Mobile Chromium checks passed at 434×716.
 - [ ] Production Android 1.2.6/versionCode 5: unsigned AAB built and 16 JVM tests passed; signing and Play upload still require the newly registered upload key and Console authorization.
