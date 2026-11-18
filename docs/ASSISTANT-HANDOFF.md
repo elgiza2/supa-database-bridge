@@ -1,6 +1,6 @@
 # Assistant repair — living handoff
 
-Updated: 2026-11-18, 14:00 UTC. Phase: autonomous routine execution repair in progress; external five-minute trigger still requires independent verification.
+Updated: 2026-11-18. Phase: Android 1.2.7/versionCode 7 uploaded to Google Play Alpha; external five-minute trigger still requires independent schedule-event verification.
 
 ## Read first
 Read docs/ARCHITECTURE.md, root AGENTS.md, android/AGENTS.md, README.md and the active section of roadmap.md. Update this document at the start and end of each implementation phase, not with a background timer. Nothing continues after the agent's turn ends.
@@ -12,7 +12,7 @@ Read docs/ARCHITECTURE.md, root AGENTS.md, android/AGENTS.md, README.md and the 
 - Listen automatically after activation; do not require repeated microphone presses. Permission denial and unavailable recognizers must remain honest failures.
 - Wake-word and driving toggles currently appear unresponsive on the owner's Honor device; prior APK v9 is not proof of a device fix.
 - Test package is Ceyo Try / si.ceyo.app.trial. Keep it installable alongside production.
-- During testing use https://tap-to-trial-subscription.lovable.app; return to the normal Android host only when the owner requests it.
+- Production Android uses https://app.ceyo.si. The owner explicitly requested this host and deferred transferring the separately managed domain; do not substitute a Lovable preview.
 - Provide design previews before new visual implementation.
 
 ## Known boundaries

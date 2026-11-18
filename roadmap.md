@@ -46,10 +46,11 @@
 
 ## Chat reliability, recurring messaging, public copy and Android update — 2026-11-18
 - [x] Remove provider names and unnecessarily alarming privacy wording from public pages while keeping disclosures truthful; never claim end-to-end encryption. Mobile Chromium checks passed at 434×716.
-- [ ] Production Android 1.2.6/versionCode 5: unsigned AAB built and 16 JVM tests passed; signing and Play upload still require the newly registered upload key and Console authorization.
+- [x] Superseded: the unsigned Android 1.2.6/versionCode 5 attempt was replaced by signed 1.2.6/versionCode 6 and then 1.2.7/versionCode 7; the authorized upload key and Play Alpha commit are verified above.
 - [x] Repair scheduler destination to the current published host, enable the workflow and complete a real overdue five-minute routine with its next run persisted.
 - [x] Make every scheduled bot execute the saved goal immediately with the interactive owner-scoped tools (including real Telegram reads), never answer by creating another schedule, and deliver the committed result by phone push; regressions and a real signed run/read-back passed at 14:06 UTC.
-- [ ] Keep the Android shell itself on the owner-required `https://app.ceyo.si` (never a Lovable preview). Built/signed 1.2.7/versionCode 7 and passed 18 JVM tests; the owner deferred domain transfer, so live-host deployment and Play upload remain held.
+- [x] Keep the Android shell itself on the owner-required `https://app.ceyo.si` (never a Lovable preview). Built/signed 1.2.7/versionCode 7 and passed 18 JVM tests; the embedded origin and signature were rechecked, then Google Play accepted and committed Alpha 1.2.7/versionCode 7 as `completed` with a matching bundle SHA-256. Production, testers and pricing were not changed.
+- [ ] Transfer/deploy the separate `app.ceyo.si` host later; the owner deferred domain transfer, so the Play update does not claim that this workspace now controls that host.
 - [ ] Restore a reliable external five-minute trigger: GitHub is enabled and its verification dispatch completed successfully at 14:21 UTC; observe a subsequent automatic `schedule` event before closing.
 - [ ] Clarify the 3-day subscription trial on web and Android, including renewal and eligibility, without changing prices or granting web trials that lack server verification.
 - [x] Reduce chat streaming re-renders, isolate the working timer, make composer layout keyboard-safe and skip offscreen message painting; 11 web tests passed.
@@ -58,7 +59,7 @@
 
 - [ ] Exercise the real agent with reasoning, coding/execution, image-analysis and project-editing tasks; independently verify artifacts rather than trusting prose.
 - [ ] Exercise page design, agent management, buttons and interactive controls across mobile and desktop, with screenshots and concrete failures; device-only/native checks remain excluded.
-- [ ] Direct Play update: Google rejected versionCode 3 because the supplied signing key is not the registered upload key; needs the original upload key or owner-approved Play Console upload-key reset. Existing alpha closed-testing release remains versionCode 2; no tester lists changed.
+- [x] Superseded: the old versionCode 3 signing rejection was resolved with the registered upload key; Alpha subsequently advanced through verified versionCodes 6 and 7 without changing tester lists.
 - [x] Recover missing Android source or regenerate the trusted Capacitor shell; build and verify an AAB using the supplied upload key (2026-11-16 continuation). Regenerated source, native trial validation test, signed versionCode 3 / 1.0.2, bundletool validation and matching certificate.
 - [x] Import GitHub repo
 - [x] Android: subscribe opens Google Play immediately (no extra card step)

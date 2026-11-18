@@ -1,6 +1,6 @@
 # Ceyo — دليل التشغيل والتسليم للوكيل التالي
 
-> **2026-11-16:** Project moved to a new Lovable project; web app published at https://supa-database-bridge.lovable.app and the Android shell now loads that host. Open items: see the last section of roadmap.md.
+> **2026-11-18:** Project moved to a new Lovable project; web app published at https://supa-database-bridge.lovable.app. The production Android shell loads https://app.ceyo.si; domain transfer/deployment to that separate host remains deferred. Open items: see roadmap.md.
 
 المالك والمشغّل: **Megsy LLC**. التواصل القانوني: **CEO@megsyai.com**.
 آخر مراجعة: **2026-11-18**. هذا الدليل يشرح الواقع الموجود في الكود، وليس ضمانًا أن كل خدمة منشورة أو كل ميزة مكتملة.
@@ -18,6 +18,7 @@
 - الصفحات العامة: حُذفت أسماء مزودي البنية من About/Privacy/Security/Cookies مع إبقاء وصف المعالجة والشركاء والاحتفاظ. النص يذكر HTTPS وضوابط الوصول ولا يدّعي E2EE. فحص Chromium على 434×716 وجد المحتوى بلا أسماء مزودين أو تمرير أفقي أو page errors، ثم تحقق من النص الجديد على رابط Privacy المنشور بلا أخطاء.
 - الجدولة: routine «ملخص رسائل تيليجرام كل ٥ دقايق» كان active لكنه متأخر من 08:44 UTC. استدعاء النسخة المنشورة بالتوقيع المحمي نفذه فعلًا وأعاد completed وسجل run بلا error وحدد الموعد التالي. GitHub CEYO_APP_URL عُدل إلى https://supa-database-bridge.lovable.app، workflow مفعّل، وverification dispatch رقم 29 نجح 12:41 UTC. آخر event مجدول مرصود قبل الإصلاح كان 08:39؛ استمرار الحدث التلقائي كل خمس دقائق يحتاج قراءة تشغيل لاحق ولا يُدّعى قبل رؤيته.
 - أندرويد: بطلب المالك حُذف إذن `USE_FULL_SCREEN_INTENT` وكل استدعاءات `setFullScreenIntent`؛ المكالمات والمنبهات أصبحت إشعارات عادية تفتح بالضغط بدل الظهور التلقائي فوق القفل. بُني ووُقّع `si.ceyo.app` إصدار 1.2.6/versionCode 6، ونجحت 17 اختبار JVM وbundletool validate وjarsigner، وأكد manifest النهائي غياب الصلاحية. رُفعت الحزمة إلى alpha، ونجحت Play validation وcommit، والقراءة بعد الاعتماد أكدت release 1.2.6/versionCode 6 بحالة completed. لم تتغير الأسعار أو قوائم المختبرين أو production. قراءة مباشرة جديدة 13:31 UTC عبر edits.tracks أكدت alpha = versionCode 6 / 1.2.6 / completed، وproduction فارغ، وinternal ما زال versionCode 2.
+- تحديث أندرويد 1.2.7/versionCode 7: الحزمة الموقعة وملف Capacitor داخلها يستخدمان `https://app.ceyo.si`، و`MegsyBridge.TRUSTED_HOST` مطابق له؛ اجتازت 18 اختبار JVM في مرحلة البناء. أعيد فحص توقيع AAB والدومين المدمج قبل الرفع، وعاد `app.ceyo.si` بHTTP 200. رُفعت الحزمة إلى Alpha ونجحت Play validation وcommit؛ قراءة مستقلة بعد الاعتماد أكدت 1.2.7/versionCode 7 بحالة `completed` وتطابق SHA-256 مع الملف المحلي. لم يتغير Production أو المختبرون أو الأسعار. نقل/نشر الدومين المنفصل ما زال مؤجلًا بطلب المالك، ولم يُختبر التحديث على جهاز فعلي في هذه الجولة.
 - واتساب/تليجرام الشخصيان عبر QR ما زالا بلا خدمة جلسات حقيقية طويلة العمر؛ Telegram الحالي Bot webhook وWhatsApp الحالي wa.me. لا QR شكلي ولا وعد بقراءة الرسائل قبل وجود Session service ومزود معتمد.
 
 ## مرور سابق — 2026-11-16 (Ceyo Try v10 وإصلاح الجدولة)
