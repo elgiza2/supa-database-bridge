@@ -42,7 +42,7 @@
 - [x] Remove provider names and unnecessarily alarming privacy wording from public pages while keeping disclosures truthful; never claim end-to-end encryption. Mobile Chromium checks passed at 434×716.
 - [ ] Production Android 1.2.6/versionCode 5: unsigned AAB built and 16 JVM tests passed; signing and Play upload still require the newly registered upload key and Console authorization.
 - [x] Repair scheduler destination to the current published host, enable the workflow and complete a real overdue five-minute routine with its next run persisted.
-- [ ] Observe a later GitHub `schedule` event after the repair; manual verification dispatch succeeded, but continuous five-minute delivery is not yet proven.
+- [ ] Restore a reliable external five-minute trigger: GitHub URL correction and manual dispatch succeeded, but no automatic `schedule` event appeared through 12:56 UTC even after workflow revalidation; continuous delivery remains unfixed.
 - [x] Reduce chat streaming re-renders, isolate the working timer, make composer layout keyboard-safe and skip offscreen message painting; 11 web tests passed.
 - [ ] Verify the signed-in chat composer and scrolling on the owner's phone; the sandbox has no restorable external-Supabase session.
 - [ ] Add honest WhatsApp/Telegram QR connection entry points only when a real session service exists; do not show a decorative QR or claim message access without one.
