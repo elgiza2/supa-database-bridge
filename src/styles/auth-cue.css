@@ -126,3 +126,4 @@ html body .megsy-auth-screen.megsy-auth-extras button.megsy-auth-primary { backg
 /* Ceyo black sign-in */
 html body .megsy-auth-screen { --auth-surface: oklch(0 0 0) !important; --auth-ink: oklch(.98 0 0) !important; --auth-control: oklch(.17 0 0) !important; --auth-control-hover: oklch(.22 0 0) !important; --auth-muted: oklch(.62 0 0) !important; background: oklch(0 0 0) !important; color: oklch(.98 0 0) !important; }
 html body .megsy-auth-screen .megsy-auth-primary { background: oklch(.98 0 0) !important; color: oklch(0 0 0) !important; -webkit-text-fill-color: oklch(0 0 0) !important; }
+.megsy-auth-trial{margin:14px auto 0;width:fit-content;padding:6px 14px;border-radius:999px;border:1px solid hsl(0 0% 100%/.18);color:hsl(0 0% 100%/.9);font-size:13px;font-weight:600}
