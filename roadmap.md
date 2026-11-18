@@ -39,8 +39,9 @@
 # Current requests (Nov 2026)
 
 ## Direct Google Play upload — 2026-11-18
-- [ ] Sign production Android 1.2.6/versionCode 5 with the owner-supplied upload-key material, verify the certificate and AAB, then upload it to the intended Play Console track without changing testers, pricing or release rollout.
-- [ ] Confirm the uploaded release through Play Console/API read-back; stop for Google login, two-factor authentication or missing upload-key file rather than claiming publication.
+- [x] Identify the authorized Play service account and match the supplied upload key to both uploaded certificate forms; build and sign `si.ceyo.app` 1.2.6/versionCode 5, validate the AAB and pass all 16 JVM tests.
+- [x] Upload versionCode 5 to an alpha edit and stage a completed release without changing testers, pricing or production; Google accepted the bundle but rejected validation because the required full-screen-intent declaration is unsubmitted. The uncommitted edit was deleted and independent read-back confirms alpha remains versionCode 2.
+- [ ] Submit the truthful calling/alarm full-screen-intent declaration in Play Console (interactive account session required), then re-upload, validate, commit and independently confirm alpha versionCode 5. Do not remove the permission or disable calls/alarms to bypass policy.
 
 ## Chat reliability, recurring messaging, public copy and Android update — 2026-11-18
 - [x] Remove provider names and unnecessarily alarming privacy wording from public pages while keeping disclosures truthful; never claim end-to-end encryption. Mobile Chromium checks passed at 434×716.
