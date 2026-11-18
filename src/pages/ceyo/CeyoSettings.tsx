@@ -395,6 +395,7 @@ function Plans({ nav }: { nav: Nav }) {
     <div className="agent-hub ceyo-page subscription-page" data-no-translate dir={ar ? "rtl" : "ltr"}>
       <header className="subscription-header"><span className="subscription-brand">Ceyo</span><Button variant="ghost" size="icon" aria-label={ar ? "إغلاق" : "Close"} onClick={() => { if (window.history.state?.idx > 0) navigate(-1); else nav("/"); }}><X/></Button></header>
       <h1 className="subscription-title">{ar ? <>اشتراك واحد.<br/>الوصول إلى كل شيء.</> : <>One subscription.<br/>Access to everything.</>}</h1>
+      <p className="subscription-trial-badge">{ar ? "جرّب ٣ أيام مجانًا" : "Try free for 3 days"}</p>
       <main className="subscription-content">
         <div className="subscription-tabs" role="tablist" aria-label="Plans">
           {PLANS.map((x,i) => <Button variant="ghost" key={x.id} role="tab" aria-selected={i === tab} aria-controls="subscription-details" onClick={() => chooseTab(i)}>{x.name}</Button>)}
@@ -409,7 +410,7 @@ function Plans({ nav }: { nav: Nav }) {
       <footer className="subscription-footer">
         <div className="subscription-trial" role="note">
           <strong>{ar ? "تجربة مجانية ٣ أيام" : "3-day free trial"}</strong>
-          <span>{ar ? "أندرويد: للمشترك الجديد المؤهل، أول ٣ أيام بـ$0 عبر Google Play، ثم يتجدد الاشتراك تلقائيًا بالسعر الظاهر حتى الإلغاء. راجع الأهلية والسعر وتاريخ الدفع في Google Play قبل التأكيد. الويب: تجربة الاستخدام المجانية منفصلة ولا تبدأ اشتراكًا مدفوعًا." : "Android: eligible new subscribers pay $0 for 3 days through Google Play, then the selected plan renews automatically at the displayed price until cancelled. Review eligibility, price and charge date in Google Play before confirming. Web: the separate usage trial does not start a paid subscription."}</span>
+          <span>{ar ? "أول ٣ أيام مجانًا للمشترك الجديد. بعدها الاشتراك بيتجدد تلقائيًا بالسعر الظاهر، وتقدر تلغي في أي وقت قبل ما التجربة تخلص من غير ما تدفع حاجة." : "New subscribers get the first 3 days free. After that, the plan renews automatically at the displayed price. Cancel anytime before the trial ends and you pay nothing."}</span>
         </div>
         <div className="subscription-intervals" role="group" aria-label="Billing interval">
           <Button variant="ghost" aria-pressed={!yearly} onClick={() => setYearly(false)}><strong dir="auto">{localPrices.monthly !== null && localPrices.currency ? formatLocalPrice(localPrices.monthly, localPrices.currency, ar ? "ar" : "en") : "…"}</strong><span>{ar ? "الفوترة شهريًا" : "Billed monthly"}</span></Button>
