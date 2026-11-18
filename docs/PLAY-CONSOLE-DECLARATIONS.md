@@ -1,13 +1,9 @@
 # Play Console setup — evidence and remaining Console steps
 
-## Full-screen intent declaration required — 2026-11-18
-Google accepted the signed 1.2.6/versionCode 5 AAB into an alpha edit, but validation returned HTTP 403: `You must let us know whether your app uses any full-screen intent permissions`. The edit was not committed; alpha remains versionCode 2. The manifest and native receivers use `USE_FULL_SCREEN_INTENT` for incoming agent calls and user-scheduled morning/night alarms, so removing it merely to bypass review would disable real behavior.
+## Full-screen intent removed by owner choice — 2026-11-18
+The first signed 1.2.6/versionCode 5 upload reached alpha validation but was not committed because Google required a full-screen-intent declaration. The owner then explicitly chose removal instead of declaration. The manifest permission and all `setFullScreenIntent` launchers were removed; incoming calls and alarms now use ordinary tap-to-open notifications rather than appearing automatically over the lock screen.
 
-Console path: **Policy and programmes → App content → Full-screen intent permissions**. Declare the calling and alarm use cases truthfully. Suggested explanation:
-
-> Ceyo uses full-screen intents only for incoming agent calls and user-scheduled morning/night alarms. The full-screen screen lets the user answer or decline a call, or dismiss an alarm, while the device is locked. It is not used for ads, promotions, or ordinary notifications.
-
-This is a Console policy form, not an Android Publisher API operation. Submission does not guarantee policy approval; re-run bundle validation after Google records the declaration.
+The signed 1.2.6/versionCode 6 AAB passed 17 JVM tests, bundle validation and signature checks; its generated manifest contains no `USE_FULL_SCREEN_INTENT`. Play validation and commit succeeded, and post-commit read-back confirms alpha release 1.2.6/versionCode 6 is `completed`. Testers, pricing and production were not changed. Device delivery timing remains controlled by Google Play.
 
 ## Applied and verified — 2026-11-08
 - Internal release versionCode 2 is completed; closed track `alpha` has a committed draft referencing versionCode 2.

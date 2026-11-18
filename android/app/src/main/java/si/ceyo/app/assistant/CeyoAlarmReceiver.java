@@ -60,7 +60,7 @@ public class CeyoAlarmReceiver extends BroadcastReceiver {
                 .setSmallIcon(R.mipmap.ic_launcher).setContentTitle(night ? "Ceyo · قبل النوم" : "Ceyo · صباح الخير")
                 .setContentText(night ? "في أفكار عايز تفضّيها قبل ما تنام؟" : "اضغط عشان أقولك ملخص يومك")
                 .setContentIntent(full).setAutoCancel(true).setPriority(NotificationCompat.PRIORITY_HIGH);
-            if (!night) b.setFullScreenIntent(full, true).setCategory(NotificationCompat.CATEGORY_ALARM);
+            if (!night) b.setCategory(NotificationCompat.CATEGORY_ALARM);
             post(c, ("routine" + kind).hashCode(), b);
         } else {
             Intent ring = new Intent(c, CeyoRingActivity.class).putExtra("kind", KIND_ALARM).putExtra("id", id).putExtra("title", title).putExtra("path", path)
@@ -68,7 +68,7 @@ public class CeyoAlarmReceiver extends BroadcastReceiver {
             PendingIntent full = PendingIntent.getActivity(c, id.hashCode(), ring, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             post(c, id.hashCode(), new NotificationCompat.Builder(c, CeyoChannels.ALARMS).setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Ceyo · منبه").setContentText(title).setCategory(NotificationCompat.CATEGORY_ALARM)
-                .setPriority(NotificationCompat.PRIORITY_MAX).setFullScreenIntent(full, true).setContentIntent(full).setAutoCancel(true));
+                .setPriority(NotificationCompat.PRIORITY_MAX).setContentIntent(full).setAutoCancel(true));
         }
     }
 
@@ -86,7 +86,7 @@ public class CeyoAlarmReceiver extends BroadcastReceiver {
             .setContentTitle(name).setContentText("video".equals(callKind) ? "مكالمة فيديو من Ceyo" : "مكالمة صوتية من Ceyo")
             .setStyle(NotificationCompat.CallStyle.forIncomingCall(caller, decline, answer))
             .setCategory(NotificationCompat.CATEGORY_CALL).setPriority(NotificationCompat.PRIORITY_MAX)
-            .setFullScreenIntent(full, true).setOngoing(true).setTimeoutAfter(45000);
+            .setContentIntent(full).setOngoing(true).setTimeoutAfter(45000);
         post(c, ("call" + id).hashCode(), b);
     }
 
